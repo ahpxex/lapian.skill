@@ -77,18 +77,18 @@ yt-dlp -f 'bestvideo[height<=720]+bestaudio/best[height<=720]' \
 
 ```bash
 # 1a. 场景切割 + 关键帧提取
-node .agents/skills/film-breakdown/scripts/extract_scenes.mjs \
+node scripts/extract_scenes.mjs \
   --input /path/to/video.mp4 \
   --output /tmp/film-breakdown/scenes/ \
   --threshold 0.3
 
 # 1b. 字幕提取
-node .agents/skills/film-breakdown/scripts/extract_subtitles.mjs \
+node scripts/extract_subtitles.mjs \
   --input /path/to/video.mp4 \
   --srt /path/to/subtitle.srt
 
 # 1c. 音频转写（仅在无字幕时）
-node .agents/skills/film-breakdown/scripts/transcribe.mjs \
+node scripts/transcribe.mjs \
   --input /path/to/video.mp4 \
   --output /tmp/film-breakdown/transcript.json \
   --model base
@@ -108,7 +108,7 @@ done
 ### Step 2: 构建统一时间轴
 
 ```bash
-node .agents/skills/film-breakdown/scripts/build_timeline.mjs \
+node scripts/build_timeline.mjs \
   --scenes /tmp/film-breakdown/scenes/scenes.json \
   --subtitles /tmp/film-breakdown/scenes/subtitles.json \
   --output /tmp/film-breakdown/timeline.json
@@ -125,7 +125,7 @@ node .agents/skills/film-breakdown/scripts/build_timeline.mjs \
 将分析文本写成 markdown 文件（使用标准 `![alt](path)` 语法引用关键帧），然后生成自包含 HTML 报告：
 
 ```bash
-node .agents/skills/film-breakdown/scripts/generate_report.mjs \
+node scripts/generate_report.mjs \
   --analysis /tmp/film-breakdown/analysis.md \
   --keyframes /tmp/film-breakdown/scenes/keyframes \
   --output /tmp/film-breakdown/report.html
